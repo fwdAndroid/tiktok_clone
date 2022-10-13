@@ -3,7 +3,6 @@ import 'package:tiktok_clone/constants.dart';
 import 'package:tiktok_clone/screens/auth_screen/signup_screen.dart';
 import 'package:tiktok_clone/widgets/text_input_field.dart';
 
-
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
@@ -71,11 +70,10 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               child: InkWell(
-                onTap: () {},
-                // authController.loginUser(
-                //   _emailController.text,
-                //   _passwordController.text,
-                // ),
+                onTap: () => authController.loginUser(
+                  _emailController.text,
+                  _passwordController.text,
+                ),
                 child: const Center(
                   child: Text(
                     'Login',

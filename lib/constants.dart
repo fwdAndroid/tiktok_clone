@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import 'controllers/auth_controllers.dart';
+
 // List pages = [
 //   VideoScreen(),
 //   SearchScreen(),
@@ -22,4 +24,4 @@ var firebaseStorage = FirebaseStorage.instance;
 var firestore = FirebaseFirestore.instance;
 
 // CONTROLLER
-// var authController = AuthController.instance;
+var authController = AuthController.instance;
