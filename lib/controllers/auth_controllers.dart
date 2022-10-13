@@ -6,12 +6,31 @@ import 'package:get/get.dart';
 import 'package:tiktok_clone/constants.dart';
 import 'package:tiktok_clone/models/user.dart' as model;
 import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/screens/auth_screen/login_screen.dart';
+import 'package:tiktok_clone/screens/main_screen/home_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
-    late Rx<File?> _pickedImage;
+  late Rx<File?> _pickedImage;
 
   File? get profilePhoto => _pickedImage.value;
+  late Rx<User?> _user;
+
+  @override
+  void onReady() {
+    super.onReady();
+    _user = Rx<User?>(firebaseAuth.currentUser);
+    _user.bindStream(firebaseAuth.authStateChanges());
+    ever(_user, _setInitialScreen);
+  }
+
+  _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => LoginScreen());
+    } else {
+      Get.offAll(() => const HomeScreen());
+    }
+  }
 
   // upload to firebase storage
   Future<String> _uploadToStorage(File image) async {
