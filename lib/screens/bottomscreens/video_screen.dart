@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants.dart';
 import 'package:tiktok_clone/controllers/video_controller.dart';
+import 'package:tiktok_clone/screens/additional_screens/comment_screen.dart';
 import 'package:tiktok_clone/widgets/circle_animation.dart';
 import 'package:tiktok_clone/widgets/video_player_iten.dart';
 import 'package:video_player/video_player.dart';
@@ -159,10 +161,10 @@ class VideoScreen extends StatelessWidget {
                                       child: Icon(
                                         Icons.favorite,
                                         size: 40,
-                                        // color: data.likes.contains(
-                                        //         authController.user.uid)
-                                        //     ? Colors.red
-                                        //     : Colors.white,
+                                        color: data.likes.contains(
+                                                authController.user.uid)
+                                            ? Colors.red
+                                            : Colors.white,
                                       ),
                                     ),
                                     const SizedBox(height: 7),
@@ -178,14 +180,13 @@ class VideoScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     InkWell(
-                                      onTap: () {},
-                                      //  Navigator.of(context).push(
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => CommentScreen(
-                                      //       id: data.id,
-                                      //     ),
-                                      //   ),
-                                      
+                                      onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => CommentScreen(
+                                            id: data.id,
+                                          ),
+                                        ),
+                                      ),
                                       child: const Icon(
                                         Icons.comment,
                                         size: 40,
