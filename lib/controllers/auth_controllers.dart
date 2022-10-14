@@ -1,20 +1,21 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:tiktok_clone/constants.dart';
-import 'package:tiktok_clone/models/user.dart' as model;
 import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/constants.dart';
 import 'package:tiktok_clone/screens/auth_screen/login_screen.dart';
 import 'package:tiktok_clone/screens/main_screen/home_screen.dart';
+import 'package:tiktok_clone/models/user.dart' as model;
+
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
+  late Rx<User?> _user;
   late Rx<File?> _pickedImage;
 
   File? get profilePhoto => _pickedImage.value;
-  late Rx<User?> _user;
+  User get user => _user.value!;
 
   @override
   void onReady() {
@@ -30,6 +31,16 @@ class AuthController extends GetxController {
     } else {
       Get.offAll(() => const HomeScreen());
     }
+  }
+
+  void pickImage() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      Get.snackbar('Profile Picture',
+          'You have successfully selected your profile picture!');
+    }
+    _pickedImage = Rx<File?>(File(pickedImage!.path));
   }
 
   // upload to firebase storage
@@ -81,17 +92,6 @@ class AuthController extends GetxController {
         e.toString(),
       );
     }
-  }
-  //Pick Image
-
-  void pickImage() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      Get.snackbar('Profile Picture',
-          'You have successfully selected your profile picture!');
-    }
-    _pickedImage = Rx<File?>(File(pickedImage!.path));
   }
 
   void loginUser(String email, String password) async {
