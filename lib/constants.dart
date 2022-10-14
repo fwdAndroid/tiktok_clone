@@ -11,10 +11,10 @@ import 'controllers/auth_controllers.dart';
 
 List pages = [
   VideoScreen(),
-  Search_Screen(),
+  SearchScreen(),
    AddVideoScreen(),
   Text('Messages Screen'),
-  ProfileScreen(),
+  ProfileScreen(uid: authController.user.uid,),
 ];
 
 // COLORS
