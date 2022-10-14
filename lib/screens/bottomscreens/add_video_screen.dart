@@ -14,8 +14,8 @@ class AddVideoScreen extends StatelessWidget {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => ConfirmScreen(
-            // videoFile: File(video.path),
-            // videoPath: video.path,
+            videoFile: File(video.path),
+            videoPath: video.path,
           ),
         ),
       );
