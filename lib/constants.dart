@@ -14,7 +14,7 @@ List pages = [
   Search_Screen(),
    AddVideoScreen(),
   Text('Messages Screen'),
-  ProfileScreen(uid: authController.user.uid),
+  ProfileScreen(),
 ];
 
 // COLORS
