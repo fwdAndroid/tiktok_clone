@@ -1,17 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:tiktok_clone/controllers/search_controller.dart';
+import 'package:tiktok_clone/models/user.dart';
+import 'package:get/get.dart';
 
-class Search_Screen extends StatefulWidget {
-  const Search_Screen({Key? key}) : super(key: key);
+class SearchScreen extends StatelessWidget {
+  SearchScreen({Key? key}) : super(key: key);
 
-  @override
-  State<Search_Screen> createState() => _Search_ScreenState();
-}
+  final SearchController searchController = Get.put(SearchController());
 
-class _Search_ScreenState extends State<Search_Screen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Obx(() {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: TextFormField(
+            decoration: const InputDecoration(
+              filled: false,
+              hintText: 'Search',
+              hintStyle: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+            onFieldSubmitted: (value) => searchController.searchUser(value),
+          ),
+        ),
+        body: searchController.searchedUsers.isEmpty
+            ? const Center(
+                child: Text(
+                  'Search for users!',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: searchController.searchedUsers.length,
+                itemBuilder: (context, index) {
+                  User user = searchController.searchedUsers[index];
+                  return InkWell(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileScreen(uid: user.uid),
+                      ),
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          user.profilePhoto,
+                        ),
+                      ),
+                      title: Text(
+                        user.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+      );
+    });
   }
 }
